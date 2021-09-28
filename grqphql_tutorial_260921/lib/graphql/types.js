@@ -47,14 +47,14 @@ const commentType = new GraphQLObjectType ({
         comment:  {type: GraphQLString},
         user:{
             type: userType,
-            resolve(parent, agrs)
+            resolve(parent, args)
             {
                 return User.findById(parent.userId);
             }
         },
         post:{
             type: postType,
-            resolve(parent, agrs)
+            resolve(parent, args)
             {
                 return Post.findOne({postId: parent.id});
             }

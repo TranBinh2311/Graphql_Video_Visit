@@ -5,9 +5,8 @@ const {User, Post, Comment } = require('../model/index');
 const getAllUser = {
     type: new GraphQLList(userType),
     decription: "Get list user in database",
-    resolve(parent, agrs)
+    resolve(parent, args)
     {
-        
         return User.find()
     }
 }
@@ -20,7 +19,7 @@ const findUserById= {
     },
     async resolve(parent, args)
     {
-        const user = await User.findById(agrs.id);
+        const user = await User.findById(args.id);
         return user;
     }
 }
@@ -28,7 +27,7 @@ const findUserById= {
 const getAllPost = {
     type: new GraphQLList(postType),
     decription: "Get list post in database",
-    resolve(parent, agrs)
+    resolve(parent, args)
     {
         return Post.find()
     }
@@ -42,7 +41,7 @@ const findPostById= {
     },
     async resolve(parent, args)
     {
-        const post= await Post.findById(agrs.id);
+        const post= await Post.findById(args.id);
         return post;
     }
 }
@@ -50,7 +49,7 @@ const findPostById= {
 const getAllComment = {
     type: new GraphQLList(commentType),
     decription: "Get list user in database",
-    resolve(parent, agrs)
+    resolve(parent, args)
     {
         return Comment.find()
     }

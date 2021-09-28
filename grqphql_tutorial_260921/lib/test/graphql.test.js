@@ -9,28 +9,16 @@ DBconnect();
 
 describe('Test query', ()=>{
 
-    // beforeAll(async ()=>{
-    //     await User.remove({})
-    // })
-
-    // afterEach( async ()=>{
-    //     await User.remove({})
-    // })
-
-    // afterAll( async ()=>{
-    //     await mongoose.connection.close();
-    // })
-
     test('get All User', async()=>{
         const getaAllUserMockFn = jest.fn().mockImplementation(()=>{
             return Promise.resolve({code:200})
         });
-        //query.getAllUser.resolve = getaAllUserMockFn;
-        query.getAllUser = getaAllUserMockFn;
-        console.log( typeof query.getAllUser);
-        const result = await query.getAllUser();
-        //expect(getaAllUserMockFn).toHaveBeenCalled();
-        //expect(getaAllUserMockFn.mock.calls.length).toBe(1);
+        User.find = getaAllUserMockFn;
+
+        const result = await query.getAllUser.resolve();
+
+        expect(getaAllUserMockFn).toHaveBeenCalled();
+        expect(getaAllUserMockFn.mock.calls.length).toBe(1);
         expect(result.code).toBe(200); 
     })
 
@@ -38,36 +26,48 @@ describe('Test query', ()=>{
         const getaAllPostMockFn = jest.fn().mockImplementation(()=>{
             return Promise.resolve({code:200})
         });
-        query.getAllPost = getaAllPostMockFn ;
+        Post.find = getaAllPostMockFn;
 
-        const result = await query.getAllPost();
-        expect(getaAllPostMockFn).toHaveBeenCalled();
+        const result = await query.getAllPost.resolve();
+
+        expect(getaAllPostMockFn).toHaveBeenCalledWith();
         expect(getaAllPostMockFn.mock.calls.length).toBe(1);
         expect(result.code).toBe(200); 
     })
 
     test('find User By Id', async()=>{
+
+        const args = 
+        {
+          id: "abcxyz",
+        }
+
         const findUserByIdMockFn = jest.fn().mockImplementation(()=>{
             return Promise.resolve({code:200})
         });
-        const id = "abcxyz";
-        query.findUserById= findUserByIdMockFn ;
         
-        const result = await query.findUserById(id);
-        expect(findUserByIdMockFn).toHaveBeenCalledWith(id);
+        User.findById = findUserByIdMockFn ;
+
+        const result = await query.findUserById.resolve(null,args);
+        expect(findUserByIdMockFn).toHaveBeenCalledWith(args.id);
         expect(findUserByIdMockFn.mock.calls.length).toBe(1);
         expect(result.code).toBe(200); 
     })
 
     test('find Post By Id', async()=>{
+        const args = 
+        {
+          id: "abcxyz",
+        }
+
         const findPostByIdMockFn = jest.fn().mockImplementation(()=>{
             return Promise.resolve({code:200})
         });
-        const id = "abcxyz";
-        query.findPostById= findPostByIdMockFn ;
         
-        const result = await query.findPostById(id);
-        expect(findPostByIdMockFn).toHaveBeenCalledWith(id);
+        Post.findById = findPostByIdMockFn ;
+
+        const result = await query.findPostById.resolve(null,args);
+        expect(findPostByIdMockFn).toHaveBeenCalledWith(args.id);
         expect(findPostByIdMockFn.mock.calls.length).toBe(1);
         expect(result.code).toBe(200); 
     })
@@ -76,11 +76,11 @@ describe('Test query', ()=>{
 })
 describe('POST /graphql' , ()=>{
     test('deletePost', async () => {
-
+        //the same
     })
 })
 describe('test mutation', ()=>{
     test('deletePost', async () => {
-
+        // the same
     })
 })
